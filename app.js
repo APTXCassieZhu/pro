@@ -1,7 +1,5 @@
 var express = require('express');
 const app = express()
-const MongoClient = require('mongodb').MongoClient;
-const mongo_address = 'mongodb://130.245.171.133:27017';
 const cookieSession = require('cookie-session');
 
 const port = 3000
@@ -11,25 +9,16 @@ app.use(cookieSession({
     keys: ['lalala'],
   }))
 
-var users = require("./routers/users")
+var addmedia = require("./routers/addmedia")
+var media = require("./routers/media")
 
-app.use('/users', users)
+app.use('/addmedia', addmedia)
+app.use('/media', media)
 app.get('/',function(req, res){
-    res.send("hello user")
+    res.send("add media version")
 })
 
-MongoClient.connect(mongo_address, (err, client) => {
-    // ... start the server
-    if(err){
-        console.log(err);
-    }else{
-        console.log("success connet to db");
-    }
-    db = client.db('pro');
-    //console.log(db);
-    app.locals.db = db;
-  })
-
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
-module.exports = app;
+app.listen(port,'0.0.0.0', () => {
+    return console.log(`App listening on port ${port}!`);
+})
 
