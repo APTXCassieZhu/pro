@@ -1,0 +1,15 @@
+---
+- hosts: pro
+  remote_user: ubuntu
+  sudo: yes
+  gather_facts: no
+  become: yes
+  pre_tasks:
+    - name: update
+      apt:
+        update_cache: yes
+  tasks:
+    - name: install nodejs
+    shell:
+      sudo apt-get install nodejs
+      ignore_errors: True
