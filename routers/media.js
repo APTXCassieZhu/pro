@@ -21,6 +21,8 @@ router.get('/:id', up.none(),function(req,res){
             res.json({'status':'error', 'error':err});
         else{
             console.log('media is '+result)
+            console.log(result.first());
+            console.log(result.first().id);
             console.log(result.first().content);
             console.log(result.first().type);
             if(result.first().type == 'mp4' || result.first().type == 'mpeg'){
