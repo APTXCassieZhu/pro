@@ -12,11 +12,12 @@ var media = require("./routers/media")
 
 //check connection to cassandra
 client.connect(function(err, result) {
-    console.log(result);
     if(err)
             console.log('Connection to cassandra error: '+err);
-    else
+    else{
             console.log('Connection with Cassandra established');
+            app.locals.client = client;
+    }
 });
 
 
