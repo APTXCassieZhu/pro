@@ -23,7 +23,7 @@ router.get('/:id', up.none(),function(req,res){
             console.log('media is '+result)
             console.log('??? '+result.first());
             res.type('image/'+req.params.id);
-            res.json({'status':"OK", 'content':result.first().content});
+            res.send(result.first().content);
         }
     });
 });
