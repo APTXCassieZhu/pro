@@ -5,7 +5,7 @@ var jsonParser = bodyParser.json()
 
 router.get('/:id',jsonParser,function(req,res){
     console.log("Get a media file by its id.")
-    var query = 'SELECT content FROM pro WHERE key=?';
+    var query = 'SELECT content FROM pro WHERE id=?';
     client.execute(query, [req.body.id], function(err, result){
         if(err)
             res.json({'status':'error', 'error':err});
