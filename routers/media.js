@@ -3,6 +3,13 @@ var bodyParser = require('body-parser');
 var router = express.Router();
 var jsonParser = bodyParser.json()
 
+const multer = require('multer');
+var storage = multer.memoryStorage();
+var upload = multer({ dest: 'uploads/', storage: storage })
+// create unique id
+var uniqid = require("uniqid");
+
+
 router.get('/:id',jsonParser,function(req,res){
     console.log("Get a media file by its id.")
     var query = 'SELECT content FROM pro WHERE id=?';
