@@ -21,6 +21,7 @@ router.post('/',upload.single('content'),function(req,res){
     //console.log(req.file.buffer);
     var client = req.app.locals.client;
     var query = 'INSERT INTO medias (id, content) VALUES (?, ?)';
+    console.log(req.file);
     client.execute(query, [id, req.file.buffer], function(err, result){
         if(err)
             res.json({'status':'error', 'error':err});
