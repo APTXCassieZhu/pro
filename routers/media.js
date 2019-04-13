@@ -6,14 +6,12 @@ var jsonParser = bodyParser.json()
 const multer = require('multer');
 var storage = multer.memoryStorage();
 var upload = multer({ dest: 'uploads/', storage: storage })
+var up = multer()
+
 // create unique id
 var uniqid = require("uniqid");
 
-router.get('/',function(req, res){
-    res.send("find media version")
-});
-
-router.get('/:id',jsonParser,function(req,res){
+router.get('/:id', up.none(),function(req,res){
     console.log("Get a media file by its id.");
     var query = 'SELECT content FROM pro WHERE id=?';
     var client = req.app.locals.client;
