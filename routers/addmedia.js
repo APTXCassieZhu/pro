@@ -18,16 +18,17 @@ router.post('/',upload.single('content'),function(req,res){
     console.log('start to add media');
     var id = uniqid();
     console.log("id is "+id);
+    console.log(req.file);
     console.log(req.file.buffer);
     var client = req.app.locals.client;
-    var query = 'INSERT INTO medias (id, content) VALUES (?, ?)';
+    /*var query = 'INSERT INTO medias (id, content) VALUES (?, ?)';
     console.log(client);
     client.execute(query, [id, req.file.buffer], function(err, result){
         if(err)
             res.json({'status':'error', 'error':err});
         else
             res.json({'status':"OK", 'id':id});
-    });
+    });*/
 });
 
 module.exports = router;
