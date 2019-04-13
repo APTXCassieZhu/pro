@@ -18,7 +18,7 @@ router.post('/',upload.single('content'),function(req,res){
     console.log('start to add media');
     var id = uniqid();
     console.log("id is "+id);
-    console.log(req.file.buffer);
+    //console.log(req.file.buffer);
     var client = req.app.locals.client;
     var query = 'INSERT INTO medias (id, content) VALUES (?, ?)';
     client.execute(query, [id, req.file.buffer], function(err, result){

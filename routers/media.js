@@ -15,7 +15,7 @@ router.get('/:id', up.none(),function(req,res){
     console.log("Get a media file by its id.");
     console.log(req.params.id);
     console.log(req.query.id);
-    var query = 'SELECT content FROM pro WHERE id=?';
+    var query = 'SELECT content FROM medias WHERE id=?';
     var client = req.app.locals.client;
     client.execute(query, [req.params.id], function(err, result){
         if(err)
