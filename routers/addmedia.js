@@ -4,6 +4,7 @@ var router = express.Router();
 var jsonParser = bodyParser.json()
 
 const multer = require('multer');
+var storage = multer.memoryStorage();
 var upload = multer({ dest: 'uploads/', storage: storage })
 // create unique id
 var uniqid = require("uniqid");
@@ -17,8 +18,8 @@ router.post('/',upload.single('content'),function(req,res){
     console.log('start to add media');
     var id = uniqid();
     console.log("id is "+id);
+    console.log(req.file.buffer);
     var client = req.app.locals.client;
-    console.log(client);
     var query = 'INSERT INTO medias (id, content) VALUES (?, ?)';
     console.log(client);
     client.execute(query, [id, req.file.buffer], function(err, result){
