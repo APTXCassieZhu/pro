@@ -15,7 +15,7 @@ var media = require("./routers/media")
 app.use('/addmedia', addmedia)
 app.use('/media', media)
 app.get('/',function(req, res){
-    res.send("add media version")
+    res.send("media version")
 })
 
 //app.listen(port,'0.0.0.0', () => {
