@@ -22,7 +22,7 @@ router.get('/:id', up.none(),function(req,res){
         else{
             console.log('media is '+result)
             console.log('??? '+result.first());
-            res.json({'status':"OK"});
+            res.json({'status':"OK", 'content':result.first().content});
         }
     });
 });
