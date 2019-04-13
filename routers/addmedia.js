@@ -15,11 +15,12 @@ client.connect(function(err, result) {
     if(err)
             console.log('Connection to cassandra error: '+err);
     else
-            console.log('Connection with Cassandra established');
+            console.log('Connection with Cassandra established when addmedia');
 });
 
-router.get('/',jsonParser,function(req,res){
+router.post('/',jsonParser,function(req,res){
     var id = uniqid.time();
+    console.log("id is"+id);
     var query = 'INSERT INTO medias (id, content) VALUES (?, ?)';
     client.execute(query, [id, req.file.buffer], function(err, result){
         if(err)
