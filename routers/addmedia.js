@@ -18,7 +18,8 @@ client.connect(function(err, result) {
             console.log('Connection with Cassandra established');
 });
 
-router.get('/',jsonParser,function(req,res){
+router.post('/',jsonParser,function(req,res){
+    console.log('start to add media');
     var id = uniqid.time();
     var query = 'INSERT INTO medias (id, content) VALUES (?, ?)';
     client.execute(query, [id, req.file.buffer], function(err, result){
