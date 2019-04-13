@@ -15,7 +15,7 @@ router.get('/',function(req, res){
 
 router.get('/:id',jsonParser,function(req,res){
     console.log("Get a media file by its id.");
-    /*var query = 'SELECT content FROM pro WHERE id=?';
+    var query = 'SELECT content FROM pro WHERE id=?';
     var client = req.app.locals.client;
     client.execute(query, [req.params.id], function(err, result){
         if(err)
@@ -24,7 +24,7 @@ router.get('/:id',jsonParser,function(req,res){
             console.log('media is '+result[0])
             res.json({'status':"OK"});
         }
-    });*/
+    });
 });
 
 module.exports = router;
