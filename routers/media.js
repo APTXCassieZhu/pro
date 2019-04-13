@@ -14,7 +14,7 @@ var uniqid = require("uniqid");
 router.get('/:id', up.none(),function(req,res){
     console.log("Get a media file by its id.");
     console.log(req.params.id);
-    var query = 'SELECT content FROM medias WHERE id=?';
+    var query = 'SELECT * FROM medias WHERE id=?';
     var client = req.app.locals.client;
     client.execute(query, [req.params.id], {prepare :true}, function(err, result){
         if(err)
@@ -22,9 +22,9 @@ router.get('/:id', up.none(),function(req,res){
         else{
             console.log('media is '+result)
             console.log(result.first());
-            console.log(result.first().id);
+            //console.log(result.first().id);
             console.log(result.first().content);
-            console.log(result.first().type);
+            //console.log(result.first().type);
             if(result.first().type == 'mp4' || result.first().type == 'mpeg'){
                 res.type('video/'+req.params.id);
             }else {
