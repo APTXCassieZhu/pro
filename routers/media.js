@@ -21,6 +21,7 @@ router.get('/:id', up.none(),function(req,res){
             res.json({'status':'error', 'error':err});
         else{
             console.log('media is '+result)
+            console.log('??? '+result.first());
             res.json({'status':"OK"});
         }
     });
