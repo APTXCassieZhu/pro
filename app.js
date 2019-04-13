@@ -18,7 +18,7 @@ app.get('/',function(req, res){
     res.send("media version")
 })
 
-//app.listen(port,'0.0.0.0', () => {
-//    return console.log(`App listening on port ${port}!`);
-//})
-app.listen(80);
+app.listen(port,'0.0.0.0', () => {
+    return console.log(`App listening on port ${port}!`);
+})
+//app.listen(80);

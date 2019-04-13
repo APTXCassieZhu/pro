@@ -22,10 +22,10 @@ router.get('/',function(req, res){
     res.send("add media version")
 });
 
-router.post('/',jsonParser,function(req,res){
+router.post('/',upload.single('content'),function(req,res){
     console.log('start to add media');
     var id = uniqid.time();
-    console.log("id is"+id);
+    console.log("id is "+id);
     var query = 'INSERT INTO medias (id, content) VALUES (?, ?)';
     client.execute(query, [id, req.file.buffer], function(err, result){
         if(err)
