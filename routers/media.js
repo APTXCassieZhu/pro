@@ -16,13 +16,15 @@ router.get('/:id', up.none(),function(req,res){
     console.log(req.params.id);
     var query = 'SELECT content FROM medias WHERE id=?';
     var client = req.app.locals.client;
-    client.execute(query, [req.params.id], function(err, result){
+    client.execute(query, [req.params.id], {prepare :true}, function(err, result){
         if(err)
             res.json({'status':'error', 'error':err});
         else{
             console.log('media is '+result)
             console.log('??? '+result.first());
+            console.log(result.first().content);
             res.type('image/'+req.params.id);
+            res.type('video/'+req.params.id);
             res.send(result.first().content);
         }
     });
