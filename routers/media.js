@@ -16,6 +16,8 @@ router.get('/:id', up.none(),function(req,res){
     console.log(req.params.id);
     var query = 'SELECT * FROM medias WHERE id=?';
     var client = req.app.locals.client;
+    var types = ['webm', 'mkv', 'flv', 'ogg','avi', 'mov' , 'wmv', 'mp4','m4v', 'm4p', 'mpeg', '3gp','3g2'];
+    var isVideo = false;
     client.execute(query, [req.params.id], {prepare :true}, function(err, result){
         if(err)
             res.json({'status':'error', 'error':err});
@@ -25,10 +27,14 @@ router.get('/:id', up.none(),function(req,res){
             //console.log(result.first().id);
             //console.log(result.first().content);
             //console.log(result.first().type);
-            if(result.first().type == 'mp4' || result.first().type == 'mpeg'){
-                res.type('video/mp4');
+            for(var i = 0; i < types.length; i++) {
+                if(result.first().type == types[i])
+                    isVideo = true;
+            }
+            if(isVideo) {
+                res.type('video/'+result.first().type);
             }else {
-                res.type('image/'+req.params.id);
+                res.type('image/'+result.first().type);
             }
             res.send(result.first().content);
         }
