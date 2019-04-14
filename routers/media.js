@@ -32,7 +32,8 @@ router.get('/:id', up.none(),function(req,res){
                     isVideo = true;
             }
             if(isVideo) {
-                res.type('video/'+result.first().type);
+                //res.type('video/'+result.first().type);
+                res.type('application/octet-stream');
             }else {
                 res.type('image/'+result.first().type);
             }
