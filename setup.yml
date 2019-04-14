@@ -10,6 +10,8 @@
         update_cache: yes
   tasks:
     - name: install nodejs
-      shell:
-        sudo apt-get install nodejs
+      apt:
+        name: nodejs
+        state: latest
+        update_cache: yes
       ignore_errors: True
