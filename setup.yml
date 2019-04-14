@@ -1,5 +1,5 @@
 ---
-- hosts: pro
+- hosts: localhost
   remote_user: ubuntu
   gather_facts: no
   become: yes
@@ -12,6 +12,12 @@
     - name: install nodejs
       apt:
         name: nodejs
+        state: latest
+        update_cache: yes
+      ignore_errors: True
+    - name: install npm
+      apt: 
+        name: npm
         state: latest
         update_cache: yes
       ignore_errors: True
