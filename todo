@@ -4,3 +4,5 @@ CREATE TABLE medias (
     content blob,    
     type text 
 );
+
+sudo ansible-playbook setup.yml
