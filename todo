@@ -5,10 +5,12 @@ sudo apt-add-repository ppa:ansible/ansible
 sudo apt update
 sudo apt install ansible
 
+// directly copy my setup.yml from github, don't clone any thing from github
+
 // run the playbook
 sudo ansible-playbook setup.yml
 
-// when error A278B781FE4B2BDA is missing publickey (only when task:add cassandra debian repository fails)
+// when error A278B781FE4B2BDA is missing publickey (only when task:add cassandra debian repository)
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys A278B781FE4B2BDA
 
 // cassandra database set up (stone don't need to do the following!!!)
