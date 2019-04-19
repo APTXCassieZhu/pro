@@ -9,6 +9,14 @@
       apt:
         update_cache: yes
   tasks:
+    - name: Create a new directory
+      file:
+        path: /pro
+        state: directory
+    - name: Pull project/media from git
+      git:
+        repo: 'https://github.com/APTXCassieZhu/pro'
+        dest: /pro
     - name: install nodejs
       apt:
         name: nodejs
