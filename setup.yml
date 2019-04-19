@@ -39,7 +39,7 @@
     - name: update 
       apt:
         update_cache: yes
-    - name: install jave for cassandra
+    - name: install java for cassandra
       apt:
         name: openjdk-8-jdk
         state: latest
