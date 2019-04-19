@@ -3,7 +3,8 @@ const app = express()
 
 // canssandra part
 var cassandra = require('cassandra-driver');
-var client = new cassandra.Client({contactPoints: ['localhost'], localDataCenter:'datacenter1', keyspace: 'pro'});
+var client = new cassandra.Client({contactPoints: ['localhost'], localDataCenter:'datacenter1', keyspace: 'system'});
+var newClient = new cassandra.Client({contactPoints: ['localhost'], localDataCenter:'datacenter1', keyspace: 'system'});
 
 const port = 3000
 
@@ -16,18 +17,28 @@ client.connect(function(err, result) {
             console.log('Connection to cassandra error: '+err);
     else{
             console.log('Connection with Cassandra established');
-            app.locals.client = client;
+            //app.locals.client = client;
             var query = "CREATE KEYSPACE IF NOT EXISTS pro with replication = {'class':'SimpleStrategy', 'replication_factor' : 3}";
             client.execute(query, [],function(err) {
                 if (!err) {
                     console.log("new keyspace created");
+                    newClient = new cassandra.Client({contactPoints: ['localhost'], localDataCenter:'datacenter1', keyspace: 'pro'});
                 }
                 else{
                     console.log("error in keyspace creation: "+ err);
                 }
             });
+    }
+});
+
+newClient.connect(function(err, result) {
+    if(err)
+            console.log('Connection to pro cassandra error: '+err);
+    else{
+            console.log('Connection with pro Cassandra established');
+            app.locals.client = newClient;
             var tableQuery = "CREATE TABLE IF NOT EXISTS medias (id text PRIMARY KEY, content blob,type text);";
-            client.execute(tableQuery, [],function(err) {
+            newClient.execute(tableQuery, [],function(err) {
                 if (!err) {
                     console.log("new table created");
                 }
