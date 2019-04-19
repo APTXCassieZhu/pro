@@ -11,7 +11,7 @@ sudo ansible-playbook setup.yml
 // when error A278B781FE4B2BDA is missing publickey
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys A278B781FE4B2BDA
 
-// cassandra database set up
+// cassandra database set up (stone don't need to do the following!!!)
 CREATE KEYSPACE pro WITH replication = {'class':'SimpleStrategy', 'replication_factor' : 3};
 CREATE TABLE medias (     
     id text PRIMARY KEY,     
