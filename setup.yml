@@ -29,6 +29,10 @@
         state: latest
         update_cache: yes
       ignore_errors: True
+    - name: Update packages based on package.json to their latest version.
+      npm:
+        path: /app/location
+        state: latest
     - name: make Oracle JRE package available
       apt_repository:
         repo: ppa:webupd8team/java
@@ -63,3 +67,7 @@
       service:
         name: cassandra
         state: restarted
+    - name: replace old version cassandra conf
+      copy:
+        src: pro/cassandra.yaml
+        dest: /etc/cassandra/cassandra.yaml

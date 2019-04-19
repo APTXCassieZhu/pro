@@ -5,6 +5,9 @@ sudo apt-add-repository ppa:ansible/ansible
 sudo apt update
 sudo apt install ansible
 
+// run the playbook
+sudo ansible-playbook setup.yml
+
 // when error A278B781FE4B2BDA is missing publickey
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys A278B781FE4B2BDA
 
