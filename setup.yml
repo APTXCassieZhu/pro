@@ -43,7 +43,8 @@
       ignore_errors: True
     - name: add cassandra debian repository
       apt_repository: 
-        repo: 'deb http://www.apache.org/dist/cassandra/debian 20x main' state=present
+        repo: 'deb http://www.apache.org/dist/cassandra/debian 311x main' 
+        state: present
     - name: add the key for the cassandra debian repo
       apt_key: keyserver=pgp.mit.edu id=F758CE318D77295D
     - name: add the other key for cassandra
