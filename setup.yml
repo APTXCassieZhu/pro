@@ -37,29 +37,29 @@
         update_cache: yes
     - name: install jave for cassandra
       apt:
-        name: oracle-java8-set-default
+        name: openjdk-8-jdk
         state: latest
         update_cache: yes
       ignore_errors: True
+    - name: add the key for the cassandra debian repo
+      apt_key: 
+        keyserver: keyserver.ubuntu.com 
+        id: F758CE318D77295D
+    - name: add the other key for cassandra
+      apt_key: 
+        keyserver: keyserver.ubuntu.com 
+        id: A278B781FE4B2BDA
     - name: add cassandra debian repository
       apt_repository: 
         repo: 'deb http://www.apache.org/dist/cassandra/debian 311x main' 
         state: present
-    - name: add the key for the cassandra debian repo
-      apt_key: keyserver=pgp.mit.edu id=749D6EEC0353B12C
-    - name: add the other key for cassandra
-      apt_key: keyserver=pgp.mit.edu id=A278B781FE4B2BDA
     - name: install cassandra
       apt:
         name: cassandra
         state: latest
         update_cache: yes
       ignore_errors: True
-    - name: make sure cassandra enable
-      service:
-        name: cassandra
-        state: enable
     - name: make sure cassandra running
       service:
         name: cassandra
-        state: restart
+        state: restarted
