@@ -8,7 +8,7 @@ sudo apt install ansible
 // run the playbook
 sudo ansible-playbook setup.yml
 
-// when error A278B781FE4B2BDA is missing publickey
+// when error A278B781FE4B2BDA is missing publickey (only when task:add cassandra debian repository fails)
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys A278B781FE4B2BDA
 
 // cassandra database set up (stone don't need to do the following!!!)
