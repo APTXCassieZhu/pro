@@ -17,7 +17,7 @@ client.connect(function(err, result) {
     else{
             console.log('Connection with Cassandra established');
             app.locals.client = client;
-            var query = "CREATE KEYSPACE IF NOT EXISTS pro with strategy_options:replication_factor = '3' and strategy_class = 'SimpleStrategy'";
+            var query = "CREATE KEYSPACE IF NOT EXISTS pro with replication = {'class':'SimpleStrategy', 'replication_factor' : 3}";
             client.execute(query, [],function(err) {
                 if (!err) {
                     console.log("new keyspace created");
