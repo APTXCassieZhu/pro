@@ -17,6 +17,24 @@ client.connect(function(err, result) {
     else{
             console.log('Connection with Cassandra established');
             app.locals.client = client;
+            var query = "CREATE KEYSPACE IF NOT EXISTS pro with strategy_options:replication_factor = '3' and strategy_class = 'SimpleStrategy'";
+            client.execute(query, [],function(err) {
+                if (!err) {
+                    console.log("new keyspace created");
+                }
+                else{
+                    console.log("error in keyspace creation: "+ err);
+                }
+            });
+            var tableQuery = "CREATE TABLE IF NOT EXISTS medias (id text PRIMARY KEY, content blob,type text);";
+            client.execute(tableQuery, [],function(err) {
+                if (!err) {
+                    console.log("new table created");
+                }
+                else{
+                    console.log("error in table creation: "+ err);
+                }
+            });
     }
 });
 

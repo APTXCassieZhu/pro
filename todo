@@ -1,3 +1,12 @@
+//install ansible
+sudo apt update
+sudo apt install software-properties-common
+sudo apt-add-repository ppa:ansible/ansible
+sudo apt update
+sudo apt install ansible
+
+
+// cassandra database set up
 CREATE KEYSPACE pro WITH replication = {'class':'SimpleStrategy', 'replication_factor' : 3};
 CREATE TABLE medias (     
     id text PRIMARY KEY,     

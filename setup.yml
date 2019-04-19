@@ -31,7 +31,7 @@
       ignore_errors: True
     - name: make Oracle JRE package available
       apt_repository:
-        repo: ppa:linuxuprising/java
+        repo: ppa:webupd8team/java
     - name: update 
       apt:
         update_cache: yes
@@ -46,9 +46,9 @@
         repo: 'deb http://www.apache.org/dist/cassandra/debian 311x main' 
         state: present
     - name: add the key for the cassandra debian repo
-      apt_key: keyserver=pgp.mit.edu id=F758CE318D77295D
+      apt_key: keyserver=pgp.mit.edu id=749D6EEC0353B12C
     - name: add the other key for cassandra
-      apt_key: keyserver=pgp.mit.edu id=2B5C1B00
+      apt_key: keyserver=pgp.mit.edu id=A278B781FE4B2BDA
     - name: install cassandra
       apt:
         name: cassandra
