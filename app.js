@@ -3,7 +3,7 @@ const app = express()
 
 // canssandra part
 var cassandra = require('cassandra-driver');
-var client = new cassandra.Client({contactPoints: ['127.0.0.1:9042'], localDataCenter:'datacenter1', keyspace: 'pro'});
+var client = new cassandra.Client({contactPoints: ['localhost'], localDataCenter:'datacenter1', keyspace: 'pro'});
 
 const port = 3000
 

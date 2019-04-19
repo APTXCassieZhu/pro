@@ -11,12 +11,12 @@
   tasks:
     - name: Create a new directory
       file:
-        path: /pro
+        path: pro
         state: directory
     - name: Pull project/media from git
       git:
         repo: 'https://github.com/APTXCassieZhu/pro'
-        dest: /pro
+        dest: pro
     - name: install nodejs
       apt:
         name: nodejs
@@ -29,3 +29,23 @@
         state: latest
         update_cache: yes
       ignore_errors: True
+    - name: install jave for cassandra
+      apt:
+        name: oracle-java8-set-default
+        state: latest
+        update_cache: yes
+      ignore_errors: True
+    - name: install cassandra
+      apt:
+        name: cassandra
+        state: latest
+        update_cache: yes
+      ignore_errors: True
+    - name: make sure cassandra enable
+      service:
+        name: cassandra
+        state: enable
+    - name: make sure cassandra running
+      service:
+        name: cassandra
+        state: restart

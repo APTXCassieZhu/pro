@@ -1,0 +1,6 @@
+CREATE KEYSPACE pro WITH replication = {'class':'SimpleStrategy', 'replication_factor' : 3};
+CREATE TABLE medias (     
+    id text PRIMARY KEY,     
+    content blob,    
+    type text 
+);
