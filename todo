@@ -13,6 +13,13 @@ sudo ansible-playbook setup.yml
 // when error A278B781FE4B2BDA is missing publickey (only when task:add cassandra debian repository)
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys A278B781FE4B2BDA
 
+// when cassandra connection fail : NoHostAvailableError
+sudo npm install cassandra-driver --save
+
+//error: ResponseError: Keyspace 'pro' does not exist
+^C
+sudo node app.js
+
 // cassandra database set up (stone don't need to do the following!!!)
 CREATE KEYSPACE pro WITH replication = {'class':'SimpleStrategy', 'replication_factor' : 3};
 CREATE TABLE medias (     

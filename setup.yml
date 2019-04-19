@@ -71,3 +71,8 @@
       copy:
         src: pro/cassandra.yaml
         dest: /etc/cassandra/cassandra.yaml
+    - name: npm install cassandra driver
+      npm:
+        name: cassandra-driver
+        path: /app/location
+        state: latest
