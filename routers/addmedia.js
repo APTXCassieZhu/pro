@@ -16,23 +16,19 @@ router.get('/',function(req, res){
 
 router.post('/',upload.single('content'),function(req,res){
     console.log('start to add media');
-    if (req.body.current_user == null) {
-        return res.json({ 'status': 'error', 'error': 'user not login' })
-    } else{
-        var id = uniqid();
-        console.log("id is "+id);
-        //console.log(req.file.buffer);
-        var client = req.app.locals.client;
-        var query = 'INSERT INTO medias (id, content, type) VALUES (?, ?, ?)';
-        console.log("upload file is "+req.file);
-        console.log(req.file.originalname.split('.')[1]);
-        client.execute(query, [id, req.file.buffer, req.file.originalname.split('.')[1]], function(err, result){
-            if(err)
-                res.json({'status':'error', 'error':err});
-            else
-                res.json({'status':"OK", 'id':id});
-        });
-    }
+    var id = uniqid();
+    console.log("id is "+id);
+    //console.log(req.file.buffer);
+    var client = req.app.locals.client;
+    var query = 'INSERT INTO medias (id, content, type) VALUES (?, ?, ?)';
+    console.log("upload file is "+req.file);
+    console.log(req.file.originalname.split('.')[1]);
+    client.execute(query, [id, req.file.buffer, req.file.originalname.split('.')[1]], function(err, result){
+        if(err)
+            res.json({'status':'error', 'error':err});
+        else
+            res.json({'status':"OK", 'id':id});
+    });
 });
 
 module.exports = router;
