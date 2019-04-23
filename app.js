@@ -10,6 +10,7 @@ const port = 3000
 
 var addmedia = require("./routers/addmedia")
 var media = require("./routers/media")
+var reset = require("./routers/reset")
 
 //check connection to cassandra
 client.connect(function(err, result) {
@@ -52,6 +53,7 @@ newClient.connect(function(err, result) {
 
 app.use('/addmedia', addmedia)
 app.use('/media', media)
+app.use('/reset', reset)
 app.get('/',function(req, res){
     res.send("media version")
 })
@@ -59,3 +61,4 @@ app.get('/',function(req, res){
 app.listen(port,'0.0.0.0', () => {
     return console.log(`App listening on port ${port}!`);
 })
+
