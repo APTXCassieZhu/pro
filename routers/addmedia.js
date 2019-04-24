@@ -16,6 +16,7 @@ router.get('/',function(req, res){
 
 router.post('/',upload.single('content'),function(req,res){
     console.log('start to add media');
+    console.log(req.file);
     var id = uniqid();
     console.log("id is "+id);
     //console.log(req.file.buffer);
@@ -27,7 +28,7 @@ router.post('/',upload.single('content'),function(req,res){
         if(err)
             res.json({'status':'error', 'error':err});
         else
-            res.json({'status':"OK", 'id':id});
+            res.json({'status':'OK', 'id':id});
     });
 });
 
