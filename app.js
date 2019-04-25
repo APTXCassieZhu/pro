@@ -13,6 +13,17 @@ var media = require("./routers/media")
 var reset = require("./routers/reset")
 
 // store session
+const MongoClient = require('mongodb').MongoClient;
+MongoClient.connect('mongodb://192.168.122.39:27017', (err, client) => {
+    // ... start the server
+    if(err){
+        console.log(err);
+    }else{
+        console.log("success connet to db pro");
+    }
+    db = client.db('pro');
+});
+
 var session = require("express-session");
 var MongoStore  = require("connect-mongo")(session);
 app.use(session({
@@ -22,6 +33,7 @@ app.use(session({
     resave: false,   
     saveUninitialized: true,
     cookie: {  
+        domain:"130.245.171.196",
         maxAge: 1000*30*60  
     },  
     secret: "lalala"}));
@@ -76,4 +88,5 @@ app.get('/',function(req, res){
 app.listen(port,'0.0.0.0', () => {
     return console.log(`App listening on port ${port}!`);
 })
+
 
