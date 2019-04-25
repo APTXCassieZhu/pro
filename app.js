@@ -11,6 +11,7 @@ const port = 3000
 var addmedia = require("./routers/addmedia")
 var media = require("./routers/media")
 var reset = require("./routers/reset")
+var deletemedia = require("./routers/deletemedia")
 
 // store session
 var cookieParser = require('cookie-parser');
@@ -73,6 +74,7 @@ newClient.connect(function(err, result) {
 app.use('/addmedia', addmedia)
 app.use('/media', media)
 app.use('/reset', reset)
+app.use('/delete', deletemedia)
 app.get('/',function(req, res){
     res.send("media version")
 })
