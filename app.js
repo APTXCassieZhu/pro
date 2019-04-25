@@ -1,5 +1,5 @@
 var express = require('express');
-const app = express()
+const app = express();
 
 // canssandra part
 var cassandra = require('cassandra-driver');
@@ -11,6 +11,20 @@ const port = 3000
 var addmedia = require("./routers/addmedia")
 var media = require("./routers/media")
 var reset = require("./routers/reset")
+
+// store session
+var session = require("express-session");
+var MongoStore  = require("connect-mongo")(session);
+app.use(session({
+    store: new MongoStore({  
+        url: 'mongodb://192.168.122.39:27017/mysession'
+    }),  
+    resave: false,   
+    saveUninitialized: true,
+    cookie: {  
+        maxAge: 1000*30*60  
+    },  
+    secret: "lalala"}));
 
 //check connection to cassandra
 client.connect(function(err, result) {
@@ -32,6 +46,7 @@ client.connect(function(err, result) {
     }
 });
 
+// create table
 newClient.connect(function(err, result) {
     if(err)
             console.log('Connection to pro cassandra error: '+err);

@@ -3,6 +3,8 @@ var bodyParser = require('body-parser');
 var router = express.Router();
 var jsonParser = bodyParser.json()
 
+var session = require("express-session");
+
 const multer = require('multer');
 var storage = multer.memoryStorage();
 var upload = multer({ dest: 'uploads/', storage: storage })
