@@ -13,6 +13,9 @@ var media = require("./routers/media")
 var reset = require("./routers/reset")
 
 // store session
+var cookieParser = require('cookie-parser');
+app.use(cookiePareser());
+
 /*var session = require("express-session");
 var MongoStore  = require("connect-mongo")(session);
 app.use(session({

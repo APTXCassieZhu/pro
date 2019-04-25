@@ -2,7 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var router = express.Router();
 var jsonParser = bodyParser.json()
-
+var cookieParser = require('cookie-parser');
 var session = require("express-session");
 
 const multer = require('multer');
@@ -15,7 +15,7 @@ var uniqid = require("uniqid");
 router.post('/',upload.single('content'),function(req,res){
     console.log('add media check login');
     console.log('cookies:'+req.cookies);
-    if(req.cookies.session.current_user== null){
+    if(req.cookies.session.current_user != null){
         console.log('start to add media');
         console.log(req.file);
         var id = uniqid();
