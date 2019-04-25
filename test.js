@@ -8,7 +8,7 @@ var newClient = new cassandra.Client({contactPoints: ['localhost'], localDataCen
 
 const port = 3000
 
-var addmedia = require("./routers/addmedia")
+var add = require("./routers/add")
 var media = require("./routers/media")
 var reset = require("./routers/reset")
 var deletemedia = require("./routers/deletemedia")
@@ -69,7 +69,7 @@ newClient.connect(function(err, result) {
             });
     }
 });
-app.use('/addmedia', addmedia)
+app.use('/add', add)
 app.use('/media', media)
 app.use('/reset', reset)
 app.use('/deletemedia', deletemedia)
