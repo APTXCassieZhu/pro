@@ -3,7 +3,7 @@ const app = express();
 
 // canssandra part
 var cassandra = require('cassandra-driver');
-var client = new cassandra.Client({contactPoints: ['localhost'], localDataCenter:'datacenter1', keyspace: 'system'});
+var oldClient = new cassandra.Client({contactPoints: ['localhost'], localDataCenter:'datacenter1', keyspace: 'system'});
 var newClient = new cassandra.Client({contactPoints: ['localhost'], localDataCenter:'datacenter1', keyspace: 'pro'});
 
 const port = 3000
@@ -32,14 +32,14 @@ app.use(session({
     secret: "lalala"}));*/
 
 //check connection to cassandra
-client.connect(function(err, result) {
+oldClient.connect(function(err, result) {
     if(err)
             console.log('Connection to cassandra error: '+err);
     else{
             console.log('Connection with Cassandra established');
             //app.locals.client = client;
             var query = "CREATE KEYSPACE IF NOT EXISTS pro with replication = {'class':'SimpleStrategy', 'replication_factor' : 3}";
-            client.execute(query, [],function(err) {
+            oldClient.execute(query, [],function(err) {
                 if (!err) {
                     console.log("new keyspace created");
                     newClient = new cassandra.Client({contactPoints: ['localhost'], localDataCenter:'datacenter1', keyspace: 'pro'});
@@ -70,6 +70,19 @@ newClient.connect(function(err, result) {
     }
 });
 
+// connect to mongodb
+const MongoClient = require('mongodb').MongoClient;
+MongoClient.connect(process.env.MONGO_ADDRESS, (err, client) => {
+    // ... start the server
+    if(err){
+        console.log(err);
+    }else{
+        console.log("success connet to mongodb pro");
+    }
+    db = client.db('pro');
+    //console.log(db);
+    app.locals.db = db;
+});
 
 app.use('/addmedia', addmedia)
 app.use('/media', media)
