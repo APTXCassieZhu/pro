@@ -26,6 +26,7 @@ router.post('/',upload.single('content'),function(req,res){
                 console.log("id is ",id);
                 //console.log(req.file.buffer);
                 var client = req.app.locals.client;
+                var db = req.app.locals.db;
                 var query = 'INSERT INTO medias (id, content, type) VALUES (?, ?, ?)';
                 console.log("upload file is ",req.file);
                 if(req.file != undefined){
@@ -33,8 +34,20 @@ router.post('/',upload.single('content'),function(req,res){
                     client.execute(query, [id, req.file.buffer, req.file.originalname.split('.')[1]], function(err, result){
                         if(err)
                             res.status(404).json({'status':'error', 'error':err});
-                        else
+                        else {
+                            // insert into mongodb collection
+                            req.body['id'] = id;
+                            req.body['poster'] = req.cookies.session.current_user;
+                            req.body['used'] = false;
+                            db.collection("medias").insertOne(req.body, function(err, a) {
+                                if (err) {
+                                    console.log('add medias into mogondb err: ',err);
+                                }else{
+                                    console.log('add medias into mogondb success');
+                                }
+                            });
                             res.json({'status':'OK', 'id':id});
+                        }
                     });
                 } else{
                     console.log('upload file is undefined');

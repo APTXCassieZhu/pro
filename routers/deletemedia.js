@@ -20,7 +20,7 @@ router.post('/',function(req,res){
     for(i=0; i< req.body.media.length; i++) {
         client.execute(query, [req.body.media[i]], {prepare :true}, function(err, result){
             if(err)
-                res.status(404).json({'status':'error', 'error':err});
+                res.json({'status':'error', 'error':err});
             else{
                 console.log('delete a media', req.body.media[i]);
                 res.json({'status':'OK'});
