@@ -15,9 +15,10 @@ router.post('/',jsonParser,function(req,res){
     console.log('delete associated medias');
     console.log('want to delete: ',req.body.media);
     var client = req.app.locals.client;
-    var query = 'DELECT * FROM medias WHERE id = ?';
+    var query = 'DELETE FROM medias WHERE id = ?';
     var i;
     for(i=0; i< req.body.media.length; i++) {
+        console.log('start to delete');
         client.execute(query, [req.body.media[i]], {prepare :true}, function(err, result){
             if(err)
                 res.json({'status':'error', 'error':err});
