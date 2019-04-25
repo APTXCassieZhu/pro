@@ -32,26 +32,26 @@ router.post('/',upload.single('content'),function(req,res){
                     console.log(req.file.originalname.split('.')[1]);
                     client.execute(query, [id, req.file.buffer, req.file.originalname.split('.')[1]], function(err, result){
                         if(err)
-                            res.json({'status':'error', 'error':err});
+                            res.status(404).json({'status':'error', 'error':err});
                         else
                             res.json({'status':'OK', 'id':id});
                     });
                 } else{
-                console.log('upload file is undefined');
-                    res.json({'status':'error', 'error':'upload file error'});
+                    console.log('upload file is undefined');
+                    res.status(404).json({'status':'error', 'error':'upload file error'});
                 }
             }else {
                 console.log('user not login add media');
-                res.json({'status':'error', 'error':'user does not log in add media'});
+                res.status(404).json({'status':'error', 'error':'user does not log in add media'});
             }
         }else{
             console.log('session undefined add media');
-            res.json({'status':'error', 'error':'session undefined add media'});
+            res.status(404).json({'status':'error', 'error':'session undefined add media'});
         }
     }
     else {
 	    console.log('cookie undefined');
-        res.json({'status':'error', 'error':'cookie undefined'});
+        res.status(404).json({'status':'error', 'error':'cookie undefined'});
     }
 });
 module.exports = router;
