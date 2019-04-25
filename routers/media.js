@@ -25,7 +25,7 @@ router.get('/:id', up.none(),function(req,res){
             res.status(404).json({'status':'error', 'error':err});
         else{
             if(result.first().type == null) {
-                res.json({'status':'error', 'err':'media has been deleted'});
+                res.status(404).json({'status':'error', 'err':'media has been deleted'});
             } else{
                 console.log('media is '+result)
                 console.log(result.first());
