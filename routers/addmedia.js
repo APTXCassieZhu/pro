@@ -14,8 +14,8 @@ var uniqid = require("uniqid");
 
 router.post('/',upload.single('content'),function(req,res){
     console.log('add media check login');
-    console.log(req.session);
-    if(req.session.status=='online'){
+    console.log('cookies:'+req.cookies);
+    if(req.cookies.session.current_user== null){
         console.log('start to add media');
         console.log(req.file);
         var id = uniqid();

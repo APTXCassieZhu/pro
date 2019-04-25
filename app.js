@@ -13,9 +13,7 @@ var media = require("./routers/media")
 var reset = require("./routers/reset")
 
 // store session
-const MongoClient = require('mongodb').MongoClient;
-
-var session = require("express-session");
+/*var session = require("express-session");
 var MongoStore  = require("connect-mongo")(session);
 app.use(session({
     store: new MongoStore({
@@ -27,7 +25,7 @@ app.use(session({
         domain:"130.245.171.196",
         maxAge: 1000*30*60
     },
-    secret: "lalala"}));
+    secret: "lalala"}));*/
 
 //check connection to cassandra
 client.connect(function(err, result) {
