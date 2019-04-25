@@ -72,7 +72,7 @@ newClient.connect(function(err, result) {
 
 // connect to mongodb
 const MongoClient = require('mongodb').MongoClient;
-MongoClient.connect(process.env.MONGO_ADDRESS, (err, client) => {
+MongoClient.connect('mongodb://192.168.122.39:27017', (err, client) => {
     // ... start the server
     if(err){
         console.log(err);
