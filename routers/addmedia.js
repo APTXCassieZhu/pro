@@ -40,12 +40,18 @@ router.post('/',upload.single('content'),function(req,res){
                 console.log('upload file is undefined');
                     res.json({'status':'error', 'error':'upload file error'});
                 }
+            }else {
+                console.log('user not login add media');
+                res.json({'status':'error', 'error':'user does not log in add media'});
             }
-        } 
+        }else{
+            console.log('session undefined add media');
+            res.json({'status':'error', 'error':'session undefined add media'});
+        }
     }
     else {
-	    console.log('user not login add media');
-        res.json({'status':'error', 'error':'user does not log in add media'});
+	    console.log('cookie undefined');
+        res.json({'status':'error', 'error':'cookie undefined'});
     }
 });
 module.exports = router;
