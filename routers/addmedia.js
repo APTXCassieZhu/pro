@@ -13,6 +13,8 @@ var uniqid = require("uniqid");
 
 
 router.post('/',upload.single('content'),function(req,res){
+    console.log('add media check login');
+    console.log(req.session);
     if(req.session.status=='online'){
         console.log('start to add media');
         console.log(req.file);
@@ -31,9 +33,11 @@ router.post('/',upload.single('content'),function(req,res){
                     res.json({'status':'OK', 'id':id});
             });
         } else{
+	    console.log('upload file is undefined');
             res.json({'status':'error', 'error':'upload file error'});
         }
     } else {
+	console.log('user not login add media');
         res.json({'status':'error', 'error':'user does not log in add media'});
     }
 });
