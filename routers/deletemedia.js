@@ -11,7 +11,7 @@ var upload = multer({ dest: 'uploads/', storage: storage })
 // create unique id
 var uniqid = require("uniqid");
 
-router.post('/',function(req,res){
+router.post('/',jsonParser,function(req,res){
     console.log('delete associated medias');
     console.log('want to delete: ',req.body.media);
     var client = req.app.locals.client;
