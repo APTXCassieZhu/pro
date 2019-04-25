@@ -74,7 +74,7 @@ newClient.connect(function(err, result) {
 app.use('/addmedia', addmedia)
 app.use('/media', media)
 app.use('/reset', reset)
-app.use('/delete', deletemedia)
+app.use('/deletemedia', deletemedia)
 app.get('/',function(req, res){
     res.send("media version")
 })
