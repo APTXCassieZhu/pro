@@ -44,7 +44,7 @@ router.post('/',upload.single('content'),function(req,res){
         } 
     }
     else {
-	console.log('user not login add media');
+	    console.log('user not login add media');
         res.json({'status':'error', 'error':'user does not log in add media'});
     }
 });
