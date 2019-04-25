@@ -10,6 +10,10 @@ var upload = multer({ dest: 'uploads/', storage: storage })
 var uniqid = require("uniqid");
 
 
+router.get('/',function(req, res){
+    res.send("add media version")
+});
+
 router.post('/',upload.single('content'),function(req,res){
     console.log('start to add media');
     console.log(req.file);
@@ -19,16 +23,13 @@ router.post('/',upload.single('content'),function(req,res){
     var client = req.app.locals.client;
     var query = 'INSERT INTO medias (id, content, type) VALUES (?, ?, ?)';
     console.log("upload file is "+req.file);
-    if(req.file != undefined){
-        console.log(req.file.originalname.split('.')[1]);
-        client.execute(query, [id, req.file.buffer, req.file.originalname.split('.')[1]], function(err, result){
-            if(err)
-                res.json({'status':'error', 'error':err});
-            else
-                res.json({'status':'OK', 'id':id});
-        });
-    } else{
-        res.json({'status':'error', 'error':'upload file error'});
-    }
+    console.log(req.file.originalname.split('.')[1]);
+    client.execute(query, [id, req.file.buffer, req.file.originalname.split('.')[1]], function(err, result){
+        if(err)
+            res.json({'status':'error', 'error':err});
+        else
+            res.json({'status':'OK', 'id':id});
+    });
 });
+
 module.exports = router;
