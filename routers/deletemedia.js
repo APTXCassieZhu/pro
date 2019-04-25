@@ -24,9 +24,9 @@ router.post('/',jsonParser,function(req,res){
                 res.json({'status':'error', 'error':err});
             else{
                 console.log('delete a media', req.body.media[i]);
-                res.json({'status':'OK'});
             }
         });
     }
+    res.json({'status':'OK'});
 });
 module.exports = router;
