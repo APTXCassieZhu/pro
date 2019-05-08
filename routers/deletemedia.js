@@ -17,16 +17,19 @@ router.post('/',jsonParser,function(req,res){
     var client = req.app.locals.client;
     var query = 'DELETE FROM medias WHERE id = ?';
     var i;
+    var errorList = [];
     for(i=0; i< req.body.media.length; i++) {
         console.log('start to delete');
         client.execute(query, [req.body.media[i]], {prepare :true}, function(err, result){
-            if(err)
-                res.json({'status':'error', 'error':err});
+            if(err){
+                //res.json({'status':'error', 'error':err});
+                errorList.push(req.body.media[i]);
+            }
             else{
                 console.log('delete a media', req.body.media[i]);
             }
         });
     }
-    res.json({'status':'OK'});
+    res.json({'status':'OK', 'error': errorList});
 });
 module.exports = router;
