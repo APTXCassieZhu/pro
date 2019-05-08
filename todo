@@ -20,7 +20,10 @@ sudo npm install cassandra-driver --save
 ^C
 sudo node app.js
 
-// cassandra database set up (stone don't need to do the following!!!)
+// add remote host in /etc/ansible/hosts
+// add public key to .ssh/id_rsa in the all remote host
+
+// cassandra database set up
 CREATE KEYSPACE pro WITH replication = {'class':'SimpleStrategy', 'replication_factor' : 3};
 CREATE TABLE medias (     
     id text PRIMARY KEY,     
