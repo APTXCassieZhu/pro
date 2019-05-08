@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
+- hosts: hosts
   remote_user: ubuntu
   gather_facts: no
   become: yes
