@@ -1,3 +1,8 @@
+In order to shard cassandra and set up cassandra nodes, please follow the instructions.
+
+    1. Run the playbook setup.yml on one of node, and install cassandra on three nodes
+    2. Modify the cassandra.yaml on 3 nodes. (how to modify in the following text)
+
 //install ansible
 sudo apt update
 sudo apt install software-properties-common
@@ -32,3 +37,35 @@ CREATE TABLE medias (
 );
 
 sudo ansible-playbook setup.yml
+
+// edit /etc/cassandra/cassandra.yaml in three servers, which all contains cassandra
+1. add seeds (command line ifconfig then get the ip address)
+    e.g. 
+        seed_provider:
+        # Addresses of hosts that are deemed contact points.
+        # Cassandra nodes use this list of hosts to find each other and learn
+        # the topology of the ring.  You must change this if you are running
+        # multiple nodes!
+        - class_name: org.apache.cassandra.locator.SimpleSeedProvider
+        parameters:
+            # seeds is actually a comma-delimited list of addresses.
+            # Ex: "<ip1>,<ip2>,<ip3>"
+            - seeds: "192.168.122.41,192.168.122.42,192.168.122.43"
+
+2. change listen addr and rpc_addr
+   rpc_addr = ip of the machine = listen addr
+3. seed : auto_rootstrap: false
+   root : auto_rootstrap: true
+4. start_rpc: true
+
+
+sudo iptables -A INPUT -p tcp -s [node IP] -m multiport --dports 7000,9042 -m state --state NEW,ESTABLISHED -j ACCEPT
+sudo iptables -L
+
+// if "nodetool status" shows "cannot connect", then
+1. In /etc/cassandra/cassandra-env.sh,
+    edit JVM_OPTS="$JVM_OPTS -Djava.rmi.server.hostname=<public name>
+    public name => 127.0.0.1
+
+JVM_OPTS="$JVM_OPTS -Djava.rmi.server.hostname=127.0.0.1"
+2. sudo systemctl restart cassandra
