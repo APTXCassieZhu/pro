@@ -21,16 +21,16 @@ router.post('/',upload.single('content'),function(req,res){
             console.log('session:',req.cookies.session);
             if(req.cookies.session.current_user != null){
                 console.log('start to add media');
-                console.log(req.file);
+                //console.log(req.file);
                 var id = uniqid();
                 console.log("id is ",id);
                 //console.log(req.file.buffer);
                 var client = req.app.locals.client;
                 var db = req.app.locals.db;
                 var query = 'INSERT INTO medias (id, content, type) VALUES (?, ?, ?)';
-                console.log("upload file is ",req.file);
+                //console.log("upload file is ",req.file);
                 if(req.file != undefined){
-                    console.log(req.file.originalname.split('.')[1]);
+                    //console.log(req.file.originalname.split('.')[1]);
                     client.execute(query, [id, req.file.buffer, req.file.originalname.split('.')[1]], function(err, result){
                         if(err)
                             res.status(404).json({'status':'error', 'error':err});
