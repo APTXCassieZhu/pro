@@ -18,6 +18,12 @@ router.post('/',function(req,res){
             console.log('Uploaded ' + file.name);
             console.log(form);
             console.log(form._parser);
+            client.execute(query, [id, file, file.name.split('.')[1]], function(err, result){
+                if(err)
+                    res.json({'status':'error', 'error':err});
+                else
+                    res.json({'status':'OK', 'id':id});
+            });
         })
         .on('error', function(err) {
             next(err);
@@ -25,12 +31,7 @@ router.post('/',function(req,res){
         .on('end', function() {
             res.end();
         });
-    /*client.execute(query, [id, req.file.buffer, req.file.originalname.split('.')[1]], function(err, result){
-        if(err)
-            res.json({'status':'error', 'error':err});
-        else
-            res.json({'status':'OK', 'id':id});
-    });*/
+    
 });
 
 module.exports = router;

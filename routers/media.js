@@ -5,15 +5,12 @@ var jsonParser = bodyParser.json()
 
 var session = require("express-session");
 
-const multer = require('multer');
-var storage = multer.memoryStorage();
-var upload = multer({ dest: 'uploads/', storage: storage })
+//const multer = require('multer');
+//var storage = multer.memoryStorage();
+//var upload = multer({ dest: 'uploads/', storage: storage })
 var up = multer()
 
-// create unique id
-var uniqid = require("uniqid");
-
-router.get('/:id', up.none(),function(req,res){
+router.get('/:id', function(req,res){
     console.log("Get a media file by its id.");
     console.log(req.params.id);
     var query = 'SELECT * FROM medias WHERE id=?';

@@ -7,7 +7,7 @@ var session = require("express-session");
 
 const multer = require('multer');
 var storage = multer.memoryStorage();
-var upload = multer({ dest: '/var/lib/cassandra/data/pro', storage: storage })
+var upload = multer({ dest: 'uploads/', storage: storage })
 // create unique id
 var uniqid = require("uniqid");
 
