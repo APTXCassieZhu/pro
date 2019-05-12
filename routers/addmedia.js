@@ -11,9 +11,6 @@ var upload = multer({ dest: 'uploads/', storage: storage })
 // create unique id
 var uniqid = require("uniqid");
 
-var Memcached = require('memcached');
-var memcached = new Memcached('localhost:11211');
-
 router.post('/',upload.single('content'),function(req,res){
     //console.log('add media check login');
     //console.log('cookies:'+req.cookies);
@@ -24,15 +21,14 @@ router.post('/',upload.single('content'),function(req,res){
             if(req.cookies.session.current_user != null){
                 //console.log('start to add media');
                 //console.log(req.file);
-                var id = uniqid();
                 //console.log("id is ",id);
                 //console.log(req.file.buffer);
                 var client = req.app.locals.client;
                 var db = req.app.locals.db;
-                var query = 'INSERT INTO medias (id, content, type) VALUES (?, ?, ?)';
+                req.body['query'] = 'INSERT INTO medias (id, content, type) VALUES (?, ?, ?)';
                 if(req.file != undefined){
                     // insert into mongodb collection
-                    req.body['id'] = id;
+                    req.body['id'] = uniqid();
                     req.body['poster'] = req.cookies.session.current_user;
                     req.body['used'] = false;
                     db.collection("medias").insertOne(req.body, function(err, a) {
@@ -42,18 +38,16 @@ router.post('/',upload.single('content'),function(req,res){
                             console.log('add medias into mogondb success');
                         }
                     });
-                    memcached.add(id, req.file.originalname.split('.')[1], 600, function(err){});
-                    client.execute(query, [id, req.file.buffer, req.file.originalname.split('.')[1]], function(err, result){
+                    client.execute(req.body['query'], [req.body['id'], req.file.buffer, req.file.originalname.split('.')[1]], function(err, result){
                         if(err) {
                             // delete media id from mongodb
-                            db.collection("medias").deleteOne({'id': id}, function(err1, obj){
+                            db.collection("medias").deleteOne({'id': req.body['id']}, function(err1, obj){
                                 if(err1)
                                     res.status(416).json({'status':'error', 'error':err});
                             })
-                            memcached.del(id, function(err){});
                             res.status(410).json({'status':'error', 'error':err});
                         } else {
-                            res.json({'status':'OK', 'id':id});
+                            res.json({'status':'OK', 'id':req.body['id']});
                         }
                     });
                 } else{

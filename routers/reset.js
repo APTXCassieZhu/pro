@@ -5,8 +5,7 @@ var jsonParser = bodyParser.json();
 
 router.get('/',function(req, res){
     var client = req.app.locals.client;
-    var query = "DROP TABLE medias;"
-    client.execute(query,[],function(err, result) {
+    client.execute("DROP TABLE medias;",[],function(err, result) {
         if (!err) {
             console.log("medias table droped");
             res.json({"status":"ok"});
