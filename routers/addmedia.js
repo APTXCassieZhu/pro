@@ -31,21 +31,27 @@ router.post('/',upload.single('content'),function(req,res){
                 //console.log("upload file is ",req.file);
                 if(req.file != undefined){
                     //console.log(req.file.originalname.split('.')[1]);
+                    // insert into mongodb collection
+                    req.body['id'] = id;
+                    req.body['poster'] = req.cookies.session.current_user;
+                    req.body['used'] = false;
+                    db.collection("medias").insertOne(req.body, function(err, a) {
+                        if (err) {
+                            console.log('add medias into mogondb err: ',err);
+                        }else{
+                            console.log('add medias into mogondb success');
+                        }
+                    });
+                    
                     client.execute(query, [id, req.file.buffer, req.file.originalname.split('.')[1]], function(err, result){
-                        if(err)
+                        if(err) {
+                            // delete media id from mongodb
+                            db.collection("medias").deleteOne({'id': id}, function(err1, obj){
+                                if(err1)
+                                    res.status(416).json({'status':'error', 'error':err});
+                            })
                             res.status(410).json({'status':'error', 'error':err});
-                        else {
-                            // insert into mongodb collection
-                            req.body['id'] = id;
-                            req.body['poster'] = req.cookies.session.current_user;
-                            req.body['used'] = false;
-                            db.collection("medias").insertOne(req.body, function(err, a) {
-                                if (err) {
-                                    console.log('add medias into mogondb err: ',err);
-                                }else{
-                                    console.log('add medias into mogondb success');
-                                }
-                            });
+                        } else {
                             res.json({'status':'OK', 'id':id});
                         }
                     });
