@@ -16,7 +16,6 @@ router.post('/',function(req,res){
     var form = new formidable.IncomingForm().parse(req)
         .on('file', function (name, file){
             console.log('Uploaded ' + file.name);
-            console.log(form);
             console.log(form._parser);
             client.execute(query, [id, file, file.name.split('.')[1]], function(err, result){
                 if(err)
