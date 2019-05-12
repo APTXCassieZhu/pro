@@ -15,19 +15,20 @@ router.post('/',jsonParser,function(req,res){
     //console.log('delete associated medias');
     console.log('want to delete: ',req.body.media);
     var client = req.app.locals.client;
-    var query = 'DELETE FROM medias WHERE id in (\'';
+    req.body[query] = 'DELETE FROM medias WHERE id in (\'';
     var i;
-    var errorList = [];
+    req.body[errorList]=[];
     for(i=0; i< req.body.media.length - 1; i++) {
-        query += req.body.media[i] + "\', \'";
+        req.body[query] += req.body.media[i] + "\', \'";
     }
-    query += req.body.media[req.body.media.length-1] + "\');"
-    client.execute(query, {prepare :true}, function(err, result){
+    req.body[query] += req.body.media[req.body.media.length-1] + "\');"
+    //console.log(req.body[query]);
+    client.execute(req.body[query], {prepare :true}, function(err, result){
         if(err){
-            errorList.push(req.body.media[i]);
+            req.body[errorList].push(req.body.media[i]);
         }
     });
     
-    res.json({'status':'OK', 'error': errorList});
+    res.json({'status':'OK', 'error': req.body[errorList]});
 });
 module.exports = router;
