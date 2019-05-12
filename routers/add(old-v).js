@@ -2,15 +2,21 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var router = express.Router();
 var jsonParser = bodyParser.json();
-var formidable = require('formidable');
 
+const multer = require('multer');
+var storage = multer.memoryStorage();
+var upload = multer({ dest: 'uploads/', storage: storage })
+// create unique id
 var uniqid = require("uniqid");
 
-router.post('/',function(req,res){
+
+router.get('/',function(req, res){
+    res.send("add media version")
+});
+
+router.post('/',upload.single('content'),function(req,res){
     console.log('start to add media');
-    var form = new formidable.IncomingForm();
-    form.parse(req);
-    console.log(form.parse(req));
+    console.log(req.file);
     var id = uniqid();
     console.log("id is "+id);
     //console.log(req.file.buffer);
