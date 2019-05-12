@@ -19,13 +19,9 @@ router.post('/',upload.single('content'),function(req,res){
         if(req.cookies.session != undefined){
             //console.log('session:',req.cookies.session);
             if(req.cookies.session.current_user != null){
-                //console.log('start to add media');
-                //console.log(req.file);
-                //console.log("id is ",id);
-                //console.log(req.file.buffer);
                 var client = req.app.locals.client;
                 var db = req.app.locals.db;
-                req.body['query'] = 'INSERT INTO medias (id, content, type) VALUES (?, ?, ?)';
+                
                 if(req.file != undefined){
                     // insert into mongodb collection
                     req.body['id'] = uniqid();
@@ -38,6 +34,7 @@ router.post('/',upload.single('content'),function(req,res){
                             console.log('add medias into mogondb success');
                         }
                     });
+                    req.body['query'] = 'INSERT INTO medias (id, content, type) VALUES (?, ?, ?)';
                     client.execute(req.body['query'], [req.body['id'], req.file.buffer, req.file.originalname.split('.')[1]], function(err, result){
                         if(err) {
                             // delete media id from mongodb

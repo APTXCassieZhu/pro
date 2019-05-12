@@ -18,7 +18,6 @@ router.get('/:id', up.none(),function(req,res){
     //console.log(req.params.id);
     var client = req.app.locals.client;
     var types = ['webm', 'mkv', 'flv', 'ogg','avi', 'mov' , 'wmv', 'mp4','m4v', 'm4p', 'mpeg', '3gp','3g2'];
-    req.body['isVideo'] = false;
 
     client.execute('SELECT * FROM medias WHERE id=?', [req.params.id], {prepare :true}, function(err, result){
         if(err)
@@ -28,14 +27,12 @@ router.get('/:id', up.none(),function(req,res){
                 res.status(417).json({'status':'error', 'err':'media has been deleted'});
             } else{
                 for(var i = 0; i < types.length; i++) {
-                    if(result.first().type == types[i])
-                    req.body['isVideo'] = true;
+                    if(result.first().type == types[i]) {
+                        res.type('video/'+result.first().type);
+                        res.send(result.first().content);
+                    }
                 }
-                if(req.body['isVideo']) {
-                    res.type('video/'+result.first().type);
-                }else {
-                    res.type('image/'+result.first().type);
-                }
+                res.type('image/'+result.first().type);
                 res.send(result.first().content);
             }
         }
