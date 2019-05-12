@@ -16,8 +16,8 @@ var Memcached = require('memcached');
 var memcached = new Memcached('localhost:11211');
 
 router.get('/:id', up.none(),function(req,res){
-    console.log("Get a media file by its id.");
-    console.log(req.params.id);
+    //console.log("Get a media file by its id.");
+    //console.log(req.params.id);
     var query = 'SELECT * FROM medias WHERE id=?';
     var client = req.app.locals.client;
     var types = ['webm', 'mkv', 'flv', 'ogg','avi', 'mov' , 'wmv', 'mp4','m4v', 'm4p', 'mpeg', '3gp','3g2'];
@@ -46,7 +46,8 @@ router.get('/:id', up.none(),function(req,res){
                 }
             });
         } else {
-            return res.json(data);
+            console.log(data);
+            return res.json({});
         }
     });
 });
