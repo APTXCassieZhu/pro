@@ -17,17 +17,7 @@ router.post('/',function(req,res){
     var form = new formidable.IncomingForm().parse(req)
         .on('file', function (name, file){
             console.log('Uploaded ' + file.name);
-        })
-        .on('field', function(name, field) {
-            console.log('Got a field:', name);
-        })
-        .on('error', function(err) {
-            console.log(err);
-            next(err);
-        })
-        .on('end', function() {
-            console.log("end");
-            res.end();
+            console.log(file.buffer);
         });
     /*client.execute(query, [id, req.file.buffer, req.file.originalname.split('.')[1]], function(err, result){
         if(err)
