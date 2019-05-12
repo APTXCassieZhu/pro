@@ -11,6 +11,8 @@ var upload = multer({ dest: 'uploads/', storage: storage })
 // create unique id
 var uniqid = require("uniqid");
 
+var Memcached = require('memcached');
+var memcached = new Memcached('localhost:11211');
 
 router.post('/',upload.single('content'),function(req,res){
     //console.log('add media check login');
@@ -28,9 +30,7 @@ router.post('/',upload.single('content'),function(req,res){
                 var client = req.app.locals.client;
                 var db = req.app.locals.db;
                 var query = 'INSERT INTO medias (id, content, type) VALUES (?, ?, ?)';
-                //console.log("upload file is ",req.file);
                 if(req.file != undefined){
-                    //console.log(req.file.originalname.split('.')[1]);
                     // insert into mongodb collection
                     req.body['id'] = id;
                     req.body['poster'] = req.cookies.session.current_user;
@@ -42,7 +42,7 @@ router.post('/',upload.single('content'),function(req,res){
                             console.log('add medias into mogondb success');
                         }
                     });
-                    
+                    memcached.add(id, req.file.originalname.split('.')[1], 600, function(err){});
                     client.execute(query, [id, req.file.buffer, req.file.originalname.split('.')[1]], function(err, result){
                         if(err) {
                             // delete media id from mongodb
@@ -50,6 +50,7 @@ router.post('/',upload.single('content'),function(req,res){
                                 if(err1)
                                     res.status(416).json({'status':'error', 'error':err});
                             })
+                            memcached.del(id, function(err){});
                             res.status(410).json({'status':'error', 'error':err});
                         } else {
                             res.json({'status':'OK', 'id':id});

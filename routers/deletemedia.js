@@ -11,6 +11,9 @@ var upload = multer({ dest: 'uploads/', storage: storage })
 // create unique id
 var uniqid = require("uniqid");
 
+var Memcached = require('memcached');
+var memcached = new Memcached('localhost:11211');
+
 router.post('/',jsonParser,function(req,res){
     //console.log('delete associated medias');
     console.log('want to delete: ',req.body.media);
@@ -20,12 +23,12 @@ router.post('/',jsonParser,function(req,res){
     var errorList = [];
     for(i=0; i< req.body.media.length - 1; i++) {
         query += req.body.media[i] + "\', \'";
+        memcached.del(req.body.media[i], function(err){});
     }
+    
     query += req.body.media[req.body.media.length-1] + "\');"
-    //client.execute(query, [req.body.media[i]], {prepare :true}, function(err, result){
     client.execute(query, {prepare :true}, function(err, result){
         if(err){
-            //res.json({'status':'error', 'error':err});
             errorList.push(req.body.media[i]);
         }
     });
