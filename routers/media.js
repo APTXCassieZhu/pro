@@ -8,7 +8,7 @@ var session = require("express-session");
 //const multer = require('multer');
 //var storage = multer.memoryStorage();
 //var upload = multer({ dest: 'uploads/', storage: storage })
-var up = multer()
+//var up = multer()
 
 router.get('/:id', function(req,res){
     console.log("Get a media file by its id.");
