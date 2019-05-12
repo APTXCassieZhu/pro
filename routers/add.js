@@ -11,13 +11,15 @@ router.post('/',function(req,res){
     
     var id = uniqid();
     console.log("id is "+id);
-    //console.log(req.file.buffer);
     //var client = req.app.locals.client;
     //var query = 'INSERT INTO medias (id, content, type) VALUES (?, ?, ?)';
     var form = new formidable.IncomingForm().parse(req)
         .on('file', function (name, file){
             console.log('Uploaded ' + file.name);
-            console.log(file);
+            console.log(form);
+            console.log(form.headers);
+            console.log(form.MultipartParser);
+            console.log(form.MultipartParser.boundary);
         })
         .on('error', function(err) {
             next(err);
