@@ -13,17 +13,17 @@ var uniqid = require("uniqid");
 
 
 router.post('/',upload.single('content'),function(req,res){
-    console.log('add media check login');
+    //console.log('add media check login');
     //console.log('cookies:'+req.cookies);
     if(req.cookies != undefined) {
         //console.log('cookies: ',req.cookies);
         if(req.cookies.session != undefined){
             //console.log('session:',req.cookies.session);
             if(req.cookies.session.current_user != null){
-                console.log('start to add media');
+                //console.log('start to add media');
                 //console.log(req.file);
                 var id = uniqid();
-                console.log("id is ",id);
+                //console.log("id is ",id);
                 //console.log(req.file.buffer);
                 var client = req.app.locals.client;
                 var db = req.app.locals.db;
@@ -50,20 +50,20 @@ router.post('/',upload.single('content'),function(req,res){
                         }
                     });
                 } else{
-                    console.log('upload file is undefined');
+                    //console.log('upload file is undefined');
                     res.status(412).json({'status':'error', 'error':'upload file error'});
                 }
             }else {
-                console.log('user not login add media');
+                //console.log('user not login add media');
                 res.status(413).json({'status':'error', 'error':'user does not log in add media'});
             }
         }else{
-            console.log('session undefined add media');
+            //console.log('session undefined add media');
             res.status(414).json({'status':'error', 'error':'session undefined add media'});
         }
     }
     else {
-	    console.log('cookie undefined');
+	    //console.log('cookie undefined');
         res.status(415).json({'status':'error', 'error':'cookie undefined'});
     }
 });

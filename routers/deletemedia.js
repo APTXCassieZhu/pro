@@ -12,24 +12,24 @@ var upload = multer({ dest: 'uploads/', storage: storage })
 var uniqid = require("uniqid");
 
 router.post('/',jsonParser,function(req,res){
-    console.log('delete associated medias');
+    //console.log('delete associated medias');
     console.log('want to delete: ',req.body.media);
     var client = req.app.locals.client;
-    var query = 'DELETE FROM medias WHERE id = ?';
+    var query = 'DELETE FROM medias WHERE id in (\'';
     var i;
     var errorList = [];
-    for(i=0; i< req.body.media.length; i++) {
-        console.log('start to delete');
-        client.execute(query, [req.body.media[i]], {prepare :true}, function(err, result){
-            if(err){
-                //res.json({'status':'error', 'error':err});
-                errorList.push(req.body.media[i]);
-            }
-            else{
-                console.log('delete a media', req.body.media[i]);
-            }
-        });
+    for(i=0; i< req.body.media.length - 1; i++) {
+        query += req.body.media[i] + "\', \'";
     }
+    query += req.body.media[req.body.media.length-1] + "\');"
+    //client.execute(query, [req.body.media[i]], {prepare :true}, function(err, result){
+    client.execute(query, {prepare :true}, function(err, result){
+        if(err){
+            //res.json({'status':'error', 'error':err});
+            errorList.push(req.body.media[i]);
+        }
+    });
+    
     res.json({'status':'OK', 'error': errorList});
 });
 module.exports = router;
