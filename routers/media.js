@@ -27,18 +27,12 @@ router.get('/:id', up.none(),function(req,res){
             if(result.first() == null) {
                 res.status(417).json({'status':'error', 'err':'media has been deleted'});
             } else{
-                //console.log('media is '+result)
-                //console.log(result.first());
-                //console.log(result.first().id);
-                //console.log(result.first().content);
-                //console.log(result.first().type);
                 for(var i = 0; i < types.length; i++) {
                     if(result.first().type == types[i])
                         isVideo = true;
                 }
                 if(isVideo) {
                     res.type('video/'+result.first().type);
-                    //res.type('application/octet-stream');
                 }else {
                     res.type('image/'+result.first().type);
                 }

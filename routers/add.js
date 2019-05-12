@@ -17,9 +17,7 @@ router.post('/',function(req,res){
         .on('file', function (name, file){
             console.log('Uploaded ' + file.name);
             console.log(form);
-            console.log(form.headers);
             console.log(form._parser);
-            console.log(form._parser.MultipartParser.boundary);
         })
         .on('error', function(err) {
             next(err);
