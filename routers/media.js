@@ -22,10 +22,10 @@ router.get('/:id', up.none(),function(req,res){
     var isVideo = false;
     client.execute(query, [req.params.id], {prepare :true}, function(err, result){
         if(err)
-            res.status(404).json({'status':'error', 'error':err});
+            res.status(416).json({'status':'error', 'error':err});
         else{
             if(result.first() == null) {
-                res.status(404).json({'status':'error', 'err':'media has been deleted'});
+                res.status(417).json({'status':'error', 'err':'media has been deleted'});
             } else{
                 //console.log('media is '+result)
                 //console.log(result.first());

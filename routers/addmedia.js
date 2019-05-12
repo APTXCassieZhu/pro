@@ -18,7 +18,7 @@ router.post('/',upload.single('content'),function(req,res){
     if(req.cookies != undefined) {
         //console.log('cookies: ',req.cookies);
         if(req.cookies.session != undefined){
-            console.log('session:',req.cookies.session);
+            //console.log('session:',req.cookies.session);
             if(req.cookies.session.current_user != null){
                 console.log('start to add media');
                 //console.log(req.file);
@@ -33,7 +33,7 @@ router.post('/',upload.single('content'),function(req,res){
                     //console.log(req.file.originalname.split('.')[1]);
                     client.execute(query, [id, req.file.buffer, req.file.originalname.split('.')[1]], function(err, result){
                         if(err)
-                            res.status(404).json({'status':'error', 'error':err});
+                            res.status(410).json({'status':'error', 'error':err});
                         else {
                             // insert into mongodb collection
                             req.body['id'] = id;
@@ -51,20 +51,20 @@ router.post('/',upload.single('content'),function(req,res){
                     });
                 } else{
                     console.log('upload file is undefined');
-                    res.status(404).json({'status':'error', 'error':'upload file error'});
+                    res.status(412).json({'status':'error', 'error':'upload file error'});
                 }
             }else {
                 console.log('user not login add media');
-                res.status(404).json({'status':'error', 'error':'user does not log in add media'});
+                res.status(413).json({'status':'error', 'error':'user does not log in add media'});
             }
         }else{
             console.log('session undefined add media');
-            res.status(404).json({'status':'error', 'error':'session undefined add media'});
+            res.status(414).json({'status':'error', 'error':'session undefined add media'});
         }
     }
     else {
 	    console.log('cookie undefined');
-        res.status(404).json({'status':'error', 'error':'cookie undefined'});
+        res.status(415).json({'status':'error', 'error':'cookie undefined'});
     }
 });
 module.exports = router;
