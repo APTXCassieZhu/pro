@@ -3,12 +3,13 @@ const app = express();
 
 // canssandra part
 var cassandra = require('cassandra-driver');
-var oldClient = new cassandra.Client({contactPoints: ['localhost'], localDataCenter:'datacenter1', keyspace: 'system'});
-var newClient = new cassandra.Client({contactPoints: ['localhost'], localDataCenter:'datacenter1', keyspace: 'pro'});
+var oldClient = new cassandra.Client({contactPoints: ['192.168.122.41'], localDataCenter:'datacenter1', keyspace: 'system'});
+var newClient = new cassandra.Client({contactPoints: ['192.168.122.41'], localDataCenter:'datacenter1', keyspace: 'pro'});
 
 const port = 3000
 
 var add = require("./routers/add")
+var delete1 = require("./routers/delete")
 var media = require("./routers/media")
 var reset = require("./routers/reset")
 var deletemedia = require("./routers/deletemedia")
@@ -70,6 +71,7 @@ newClient.connect(function(err, result) {
     }
 });
 app.use('/add', add)
+app.use('/delete', delete1)
 app.use('/media', media)
 app.use('/reset', reset)
 app.use('/deletemedia', deletemedia)
