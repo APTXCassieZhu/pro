@@ -16,7 +16,7 @@ router.post('/',upload.single('content'),function(req,res){
     console.log('add media check login');
     //console.log('cookies:'+req.cookies);
     if(req.cookies != undefined) {
-        console.log('cookies: ',req.cookies);
+        //console.log('cookies: ',req.cookies);
         if(req.cookies.session != undefined){
             console.log('session:',req.cookies.session);
             if(req.cookies.session.current_user != null){
