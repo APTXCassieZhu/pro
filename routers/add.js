@@ -17,13 +17,14 @@ router.get('/',function(req, res){
 router.post('/',upload.single('content'),function(req,res){
     console.log('start to add media');
     console.log(req.file);
-
+    var id = uniqid();
+    console.log("id is "+id);
     //console.log(req.file.buffer);
     var client = req.app.locals.client;
 
     console.log("upload file is "+req.file);
     console.log(req.file.originalname.split('.')[1]);
-    client.execute('INSERT INTO medias (id, content, type) VALUES (?, ?, ?)', [uniqid(), req.file.buffer, req.file.originalname.split('.')[1]], function(err, result){
+    client.execute('INSERT INTO medias (id, content, type) VALUES (?, ?, ?)', [id, req.file.buffer, req.file.originalname.split('.')[1]], function(err, result){
         if(err)
             res.json({'status':'error', 'error':err});
         else{
