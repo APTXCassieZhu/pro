@@ -39,9 +39,12 @@ router.post('/',upload.single('content'),function(req,res){
                         if(err) {
                             // delete media id from mongodb
                             db.collection("medias").deleteOne({'id': req.body['id']}, function(err1, obj){
-                                if(err1)
-                                    res.status(416).json({'status':'error', 'error':err});
+                                if(err1) {
+                                    console.log(err1);
+                                    res.status(416).json({'status':'error', 'error':err1});
+                                }
                             })
+                            console.log(err);
                             res.status(410).json({'status':'error', 'error':err});
                         } else {
                             res.json({'status':'OK', 'id':req.body['id']});
