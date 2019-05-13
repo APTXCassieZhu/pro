@@ -29,9 +29,9 @@ router.post('/',upload.single('content'),function(req,res){
                     req.body['used'] = false;
                     db.collection("medias").insertOne(req.body, function(err, a) {
                         if (err) {
-                            console.log('add medias into mogondb err: ',err);
+                            console.log('add medias '+req.body['id']+' into mogondb err: ',err);
                         }else{
-                            console.log('add medias into mogondb success');
+                            console.log('add medias '+req.body['id']+' into mogondb success');
                         }
                     });
                     req.body['query'] = 'INSERT INTO medias (id, content, type) VALUES (?, ?, ?)';
